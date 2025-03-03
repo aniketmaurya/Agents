@@ -31,12 +31,12 @@ Step 2 is auto checked with Pydantic
 """
 
 import json
-from typing import Any, List, Union, Dict
+from typing import Any, Dict, List, Union
 
 from langchain_community.tools import StructuredTool
-
 from langchain_core.utils.function_calling import convert_to_openai_function
 from loguru import logger
+
 from agents.specs import ChatCompletion, ToolCall
 
 
@@ -113,9 +113,7 @@ def need_tool_use(output: ChatCompletion) -> bool:
     return False
 
 
-def check_function_signature(
-    output: ChatCompletion, tool_registry: ToolRegistry = None
-):
+def check_function_signature(output: ChatCompletion, tool_registry: ToolRegistry = None):
     tools = output.choices[0].message.tool_calls
     invalid = False
     for tool in tools:
