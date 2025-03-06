@@ -1,6 +1,6 @@
 # AI Doot 🤖
 
-Build Agentic workflows with function calling.
+Build agentic workflows with function calling.
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/aniketmaurya/python-project-template?template=false)
 
@@ -8,36 +8,33 @@ Build Agentic workflows with function calling.
   <img src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/app-2/studio-badge.svg" alt="Open In Studio"/>
 </a>
 
-
 ## Installation
 
-**Install latest branch:**
+To install the latest version:
 
-```shell
+```bash
 pip install git+https://github.com/aniketmaurya/aidoot.git@main
 ```
 
-**or, for editable installation:**
+For an editable installation, clone the repository and install locally:
 
-```shell
-  git clone https://github.com/aniketmaurya/aidoot.git
-  cd aidoot
-  pip install -e .
+```bash
+git clone https://github.com/aniketmaurya/aidoot.git
+cd aidoot
+pip install -e .
 ```
 
 ## Supported LLMs
 
-✅ OpenAI
+- ✅ OpenAI
+- ✅ Cohere Command R and Command R+
+- ✅ LlamaCPP (open-source)
 
-✅ Cohere Command R and Command R+
+## Usage / Examples
 
-✅ LlamaCPP (open-source)
+### Use with Local or Cloud LLMs
 
-## Usage/Examples
-
-### Simple tool use with a local or cloud LLM
-
-LLM with access to weather API:
+Example: LLM with access to a weather API
 
 ```python
 from aidoot.llms import LlamaCppChatCompletion
@@ -45,7 +42,7 @@ from aidoot.tools import get_current_weather, wikipedia_search
 from aidoot.tool_executor import need_tool_use
 
 llm = LlamaCppChatCompletion.from_default_llm(n_ctx=0)
-llm.bind_tools([get_current_weather, wikipedia_search])  # Add any tool from LangChain
+llm.bind_tools([get_current_weather, wikipedia_search])  # Add tools from LangChain
 
 messages = [
     {"role": "user", "content": "how is the weather in London today?"}
@@ -59,9 +56,7 @@ if need_tool_use(output):
     tool_results[0]["role"] = "assistant"
 
     updated_messages = messages + tool_results
-    updated_messages = updated_messages + [
-        {"role": "user", "content": "Think step by step and answer my question based on the above context."}
-    ]
+    updated_messages.append({"role": "user", "content": "Think step by step and answer my question based on the above context."})
     output = llm.chat_completion(updated_messages)
 
 print(output.choices[0].message.content)
@@ -82,41 +77,39 @@ Certainly, let's break down the information provided in the weather data for Lon
 7. **Weather Condition**: It's a sunny day in London.
 8. **Wind**: The wind is blowing from the northwest at a speed of 9 km/h (6 mph).
 
-Based on this information, it seems like today is a beautiful and sunny day in London. The temperature is quite
-pleasant, and there's no precipitation to worry about. It's a great time to be outdoors!
+Based on this information, it seems like today is a beautiful and sunny day in London. The temperature is quite pleasant, and there's no precipitation to worry about. It's a great time to be outdoors!
 ```
 
 </details>
 
-
-`AIDoot` also support Cohere API for tool use/function calling. Check out the reproducible notebook [here](https://github.com/aniketmaurya/agents/blob/main/examples/cohere.ipynb).
-
-
-<br>
+`AIDoot` also supports the Cohere API for tool use and function calling. Check out the reproducible notebook [here](https://github.com/aniketmaurya/agents/blob/main/examples/cohere.ipynb).
 
 ### Multi-modal Agent 👁🤖️
 
-You can build an AI Agent that can see the world with computer vision.
+Build AI agents that can see the world with computer vision.
+
+Example: Using a multi-modal agent with image recognition
 
 ```python
-from aidoot.llms import LlamaCppChatCompletion
-from aidoot.tools import wikipedia_search, google_search, image_inspector
+from agents.llms import LlamaCppChatCompletion
+from agents.tools import wikipedia_search, google_search, image_inspector
 
 llm = LlamaCppChatCompletion.from_default_llm(n_ctx=0)
 llm.bind_tools([google_search, wikipedia_search, image_inspector])
 
 image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
 messages = [
-    {"role": "system", "content": "You are a helpful assistant that has access to tools and use that to help humans."},
-    {"role": "user",
-     "content": f"Check this image {image_url} and suggest me a location where I can go in London which looks similar"}
+    {"role": "system", "content": "You are a helpful assistant that has access to tools and uses them to help humans."},
+    {"role": "user", "content": f"Check this image {image_url} and suggest me a location in London that looks similar."}
 ]
+
 output = llm.chat_completion(messages)
 tool_results = llm.run_tools(output)
 
 updated_messages = messages + tool_results
-messages = updated_messages + [{"role": "user", "content": "please answer me, based on the tool results."}]
+messages = updated_messages + [{"role": "user", "content": "Please answer based on the tool results."}]
 output = llm.chat_completion(messages)
+
 print(output.choices[0].message.content)
 ```
 
@@ -129,23 +122,13 @@ sky filled with clouds. The presence of people indicates that it could be a popu
 leisurely walks. If you're looking for a similar location in London, you might consider visiting one of the city's
 many parks or nature reserves. Here are a few suggestions:
 
-1. **Richmond Park**: This is the largest royal park in London and offers a variety of landscapes, including open
-grasslands, wooded areas, and lakes. It's a great place for walking, cycling, and enjoying the outdoors.
+1. **Richmond Park**: The largest royal park in London, with open grasslands, wooded areas, and lakes. It's ideal for walking, cycling, and enjoying the outdoors.
+2. **Hampstead Heath**: Known for its ponds, meadows, and woodlands. It's popular for picnics, sunbathing, and hiking.
+3. **Greenwich Park**: Offers panoramic views of the city, along with several historic buildings, including the Royal Observatory.
+4. **Victoria Park**: A smaller park known for its lakes and gardens.
+5. **Hyde Park**: A central park with attractions like the Serpentine Lake and Speaker's Corner.
 
-2. **Hampstead Heath**: Another large green space in London, Hampstead Heath is known for its ponds, meadows, and
-woodlands. It's a popular spot for picnics, sunbathing, and hiking.
-
-3. **Greenwich Park**: This park offers panoramic views of the city and is home to several historic buildings,
-including the Royal Observatory. It's a great place for a leisurely walk or a picnic.
-
-4. **Victoria Park**: A smaller but still beautiful park in East London, Victoria Park is known for its lakes,
-gardens, and outdoor events.
-
-5. **Hyde Park**: One of the most central parks in London, Hyde Park offers a variety of attractions, including the
-Serpentine Lake, Speaker's Corner, and several monuments.
-
-These locations all offer a peaceful and natural environment similar to the image you provided, making them
-excellent choices for a day out in London.
+These locations offer a peaceful, natural environment similar to the image, making them perfect for a relaxing day outdoors in London.
 ```
 
 </details>
@@ -154,5 +137,6 @@ excellent choices for a day out in London.
 
 Built with PyCharm 🧡. Thanks to JetBrains for supporting this work by providing free credits.
 
-<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/PyCharm_icon.svg" alt="PyCharm logo.">
-<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.svg" alt="JetBrains logo.">
+<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/PyCharm_icon.svg" alt="PyCharm logo">
+<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.svg" alt="JetBrains logo">
+```
