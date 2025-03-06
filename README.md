@@ -1,6 +1,6 @@
-# Agents 🤖
+# AI Doot 🤖
 
-Build Agentic workflows with function calling, powered by LangChain.
+Build Agentic workflows with function calling.
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/aniketmaurya/python-project-template?template=false)
 
@@ -14,14 +14,14 @@ Build Agentic workflows with function calling, powered by LangChain.
 **Install latest branch:**
 
 ```shell
-pip install git+https://github.com/aniketmaurya/agents.git@main
+pip install git+https://github.com/aniketmaurya/aidoot.git@main
 ```
 
 **or, for editable installation:**
 
 ```shell
-  git clone https://github.com/aniketmaurya/agents.git
-  cd agents
+  git clone https://github.com/aniketmaurya/aidoot.git
+  cd aidoot
   pip install -e .
 ```
 
@@ -40,9 +40,9 @@ pip install git+https://github.com/aniketmaurya/agents.git@main
 LLM with access to weather API:
 
 ```python
-from agents.llms import LlamaCppChatCompletion
-from agents.tools import get_current_weather, wikipedia_search
-from agents.tool_executor import need_tool_use
+from aidoot.llms import LlamaCppChatCompletion
+from aidoot.tools import get_current_weather, wikipedia_search
+from aidoot.tool_executor import need_tool_use
 
 llm = LlamaCppChatCompletion.from_default_llm(n_ctx=0)
 llm.bind_tools([get_current_weather, wikipedia_search])  # Add any tool from LangChain
@@ -89,7 +89,7 @@ pleasant, and there's no precipitation to worry about. It's a great time to be o
 </details>
 
 
-`Agents` also support Cohere API for tool use/function calling. Check out the reproducible notebook [here](https://github.com/aniketmaurya/agents/blob/main/examples/cohere.ipynb).
+`AIDoot` also support Cohere API for tool use/function calling. Check out the reproducible notebook [here](https://github.com/aniketmaurya/agents/blob/main/examples/cohere.ipynb).
 
 
 <br>
@@ -99,8 +99,8 @@ pleasant, and there's no precipitation to worry about. It's a great time to be o
 You can build an AI Agent that can see the world with computer vision.
 
 ```python
-from agents.llms import LlamaCppChatCompletion
-from agents.tools import wikipedia_search, google_search, image_inspector
+from aidoot.llms import LlamaCppChatCompletion
+from aidoot.tools import wikipedia_search, google_search, image_inspector
 
 llm = LlamaCppChatCompletion.from_default_llm(n_ctx=0)
 llm.bind_tools([google_search, wikipedia_search, image_inspector])

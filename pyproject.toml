@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -19,7 +19,7 @@ version = {attr = "aidoot.__version__"}
 
 [tool.ruff]
 line-length = 120
-target-version = "py39"
+target-version = "py310"
 lint.select = ["I"]# implementation for isort
 
 [dependency-groups]
