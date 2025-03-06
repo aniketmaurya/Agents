@@ -1,12 +1,12 @@
 # AI Doot 🤖 - Your Agentic Workflow Wizard 🧙‍♂️
 
-Ready to turn your ideas into action? **AI Doot** lets you build intelligent agent workflows that actually *think* using function calling. ✨
-
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/aniketmaurya/python-project-template?template=false)
-
-<a target="_blank" href="https://lightning.ai/lightning-ai/studios/introduction-to-ai-agents">
-  <img src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/app-2/studio-badge.svg" alt="Open In Studio"/>
-</a>
+<div align="center">
+  [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/aniketmaurya/python-project-template?template=false)
+  &nbsp;&nbsp;&nbsp;
+  <a target="_blank" href="https://lightning.ai/lightning-ai/studios/introduction-to-ai-agents">
+    <img src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/app-2/studio-badge.svg" alt="Open In Studio"/>
+  </a>
+</div>
 
 ---
 
@@ -150,9 +150,11 @@ These parks are totally on-brand with that image. Your perfect outdoor day await
 
 ## 🙌 Acknowledgements
 
-Built with love, powered by **PyCharm** 🧡 (huge shoutout to JetBrains for the free credits — you're awesome).
+Built with love, powered by **PyCharm** 🧡  
+*(Huge shoutout to JetBrains for the free credits — you're awesome!)*
 
 <div align="center">
   <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/PyCharm_icon.svg" alt="PyCharm logo" width="100"/>
+  &nbsp;&nbsp;&nbsp;
   <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.svg" alt="JetBrains logo" width="100"/>
 </div>
