@@ -1,16 +1,16 @@
 # Serve Agents with LitServe
 # https://github.com/Lightning-AI/LitServe
-import litserve as ls
+import logging
 
+import litserve as ls
 from agents.llms import LlamaCppChatCompletion
+from agents.tool_executor import need_tool_use
 from agents.tools import (
     get_current_weather,
-    wikipedia_search,
     google_search,
     image_inspector,
+    wikipedia_search,
 )
-from agents.tool_executor import need_tool_use
-import logging
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
 
