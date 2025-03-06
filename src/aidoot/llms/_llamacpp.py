@@ -1,13 +1,11 @@
-from typing import List, Optional, Any, Dict
-from loguru import logger
+from typing import Any, Dict, List, Optional
 
 from agents.specs import ChatCompletion
 from agents.tool_executor import ToolRegistry
 from langchain_core.tools import StructuredTool
-from llama_cpp import ChatCompletionRequestMessage
+from llama_cpp import ChatCompletionRequestMessage, Llama
 from llama_cpp.llama_tokenizer import LlamaHFTokenizer
-
-from llama_cpp import Llama
+from loguru import logger
 
 
 def create_tool_use_llm(**kwargs):
@@ -15,9 +13,7 @@ def create_tool_use_llm(**kwargs):
         repo_id="meetkai/functionary-small-v2.2-GGUF",
         filename="functionary-small-v2.2.q4_0.gguf",
         chat_format="functionary-v2",
-        tokenizer=LlamaHFTokenizer.from_pretrained(
-            "meetkai/functionary-small-v2.2-GGUF"
-        ),
+        tokenizer=LlamaHFTokenizer.from_pretrained("meetkai/functionary-small-v2.2-GGUF"),
         **kwargs,
     )
 
@@ -39,9 +35,7 @@ class LlamaCppChatCompletion:
     @staticmethod
     def from_default_llm(verbose=False, n_gpu_layers=-1, **kwargs):
         """Kwargs for `LlamaCppChatCompletion.from_pretrained`"""
-        return LlamaCppChatCompletion(
-            create_tool_use_llm(n_gpu_layers=n_gpu_layers, verbose=verbose, **kwargs)
-        )
+        return LlamaCppChatCompletion(create_tool_use_llm(n_gpu_layers=n_gpu_layers, verbose=verbose, **kwargs))
 
     def bind_tools(self, tools: Optional[List[StructuredTool]] = None):
         if tools:
@@ -52,9 +46,7 @@ class LlamaCppChatCompletion:
     def tools(self):
         return self.tool_registry.openai_tools
 
-    def chat_completion(
-        self, messages: List[ChatCompletionRequestMessage], **kwargs
-    ) -> ChatCompletion:
+    def chat_completion(self, messages: List[ChatCompletionRequestMessage], **kwargs) -> ChatCompletion:
         output = self.model.create_chat_completion(messages, tools=self.tools, **kwargs)
         logger.debug(output)
         return ChatCompletion(**output)

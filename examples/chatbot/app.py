@@ -3,9 +3,9 @@ from agents.llms import LlamaCppChatCompletion
 from agents.tool_executor import need_tool_use
 from agents.tools import (
     get_current_weather,
-    wikipedia_search,
     google_search,
     image_inspector,
+    wikipedia_search,
 )
 
 llm = LlamaCppChatCompletion.from_default_llm(n_ctx=0)
@@ -34,9 +34,7 @@ def llamacpp_chat(message, history, image=None):
     if need_tool_use(output):
         tool_response = llm.run_tools(output)
         updated_messages = messages + tool_response
-        messages = updated_messages + [
-            {"role": "user", "content": "please answer me, based on the tool results."}
-        ]
+        messages = updated_messages + [{"role": "user", "content": "please answer me, based on the tool results."}]
         output = llm.chat_completion(messages)
 
     return output.choices[0].message.content

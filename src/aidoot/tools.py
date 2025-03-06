@@ -1,11 +1,11 @@
 import json
+
 import requests
 from agents.llms.llm import create_image_inspector
+from agents.utils import llama_cpp_image_handler
 from langchain.tools import tool
 from langchain_community.utilities import WikipediaAPIWrapper
 from loguru import logger
-
-from agents.utils import llama_cpp_image_handler
 
 wikipedia_api_wrapper = None
 _image_inspector = None
@@ -22,11 +22,7 @@ def get_current_weather(city: str) -> str:
       str: current weather condition, or None if an error occurs.
     """
     try:
-        data = json.dumps(
-            requests.get(f"https://wttr.in/{city}?format=j1")
-            .json()
-            .get("current_condition")[0]
-        )
+        data = json.dumps(requests.get(f"https://wttr.in/{city}?format=j1").json().get("current_condition")[0])
         return data
     except Exception as e:
         logger.exception(e)
@@ -82,9 +78,7 @@ def image_inspector(image_url_or_path: str) -> str:
     """
     global _image_inspector
     if _image_inspector is None:
-        logger.info(
-            "Loading image inspector for first time. This might take a while..."
-        )
+        logger.info("Loading image inspector for first time. This might take a while...")
         _image_inspector = create_image_inspector()
 
     response = _image_inspector.create_chat_completion(
@@ -95,9 +89,7 @@ def image_inspector(image_url_or_path: str) -> str:
                     {"type": "text", "text": "Describe this image in detail please."},
                     {
                         "type": "image_url",
-                        "image_url": {
-                            "url": llama_cpp_image_handler(image_url_or_path)
-                        },
+                        "image_url": {"url": llama_cpp_image_handler(image_url_or_path)},
                     },
                 ],
             }
