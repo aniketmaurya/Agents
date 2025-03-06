@@ -1,14 +1,14 @@
 # Add 'docs' to any changes within 'docs' folder or any subfolders
 documentation:
-- docs/**/*
+  - docs/**/*
 
 example:
-- examples/**/*
+  - examples/**/*
 
 test:
-- tests/**/*
+  - tests/**/*
 
 CI:
-- .github/**/*
-- "*.yaml"
-- "*.yml"
+  - .github/**/*
+  - "*.yaml"
+  - "*.yml"
