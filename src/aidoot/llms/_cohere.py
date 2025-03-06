@@ -1,12 +1,11 @@
-import time
-import cohere
-
-from typing import List, Optional, Any, Dict
-
-from langchain_core.messages import AIMessage
 import logging
-from agents.specs import ChatCompletion, Choice, Usage, Message, ToolCall
+import time
+from typing import Any, Dict, List, Optional
+
+import cohere
+from agents.specs import ChatCompletion, Choice, Message, ToolCall, Usage
 from agents.tool_executor import ToolRegistry
+from langchain_core.messages import AIMessage
 from langchain_core.tools import StructuredTool
 from llama_cpp import ChatCompletionRequestMessage
 
@@ -22,9 +21,7 @@ def _format_cohere_to_openai(output: cohere.NonStreamedChatResponse):
         tool_calls.append(tool)
 
     message = Message(role="assistant", content=output.content, tool_calls=tool_calls)
-    choices = Choice(
-        index=0, logprobs=None, message=message, finish_reason=output.finish_reason
-    )
+    choices = Choice(index=0, logprobs=None, message=message, finish_reason=output.finish_reason)
     usage = Usage(
         prompt_tokens=response_meta.tokens.input_tokens,
         completion_tokens=response_meta.tokens.output_tokens,
@@ -64,9 +61,7 @@ class CohereChatCompletion:
             tool = ToolCall(id=tool["id"], type=tool["type"], function=tool["function"])
             tool_calls.append(tool)
 
-        message = Message(
-            role="assistant", content=output.content, tool_calls=tool_calls
-        )
+        message = Message(role="assistant", content=output.content, tool_calls=tool_calls)
         choices = Choice(index=0, logprobs=None, message=message, finish_reason="stop")
         usage = Usage(
             prompt_tokens=response_metadata["token_count"].get("input_tokens", -1),
@@ -83,9 +78,7 @@ class CohereChatCompletion:
         }
         return ChatCompletion(**response)
 
-    def chat_completion(
-        self, messages: List[ChatCompletionRequestMessage], **kwargs
-    ) -> ChatCompletion:
+    def chat_completion(self, messages: List[ChatCompletionRequestMessage], **kwargs) -> ChatCompletion:
         output = self.llm.invoke(messages, **kwargs)
         logger.debug(output)
         return self._format_cohere_to_openai(output)
@@ -116,9 +109,7 @@ class CohereChatCompletionV2:
         )
         return output
 
-    def chat_completion(
-        self, messages: List[Dict[str, str]], **kwargs
-    ) -> ChatCompletion:
+    def chat_completion(self, messages: List[Dict[str, str]], **kwargs) -> ChatCompletion:
         message = messages[-1]["content"]
         chat_history = messages[:-1]
         output = self.chat(message=message, chat_history=chat_history, **kwargs)

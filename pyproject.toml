@@ -3,19 +3,19 @@ requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "Agents"
+name = "aidoot"
 description = "Build Agentic workflows with function calling"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 license = {file = "LICENSE"}
 dynamic = ["version"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["agents*"]
+include = ["*"]
 
 [tool.setuptools.dynamic]
-version = {attr = "agents.__version__"}
+version = {attr = "aidoot.__version__"}
 
 [tool.ruff]
 line-length = 120

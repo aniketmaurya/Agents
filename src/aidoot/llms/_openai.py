@@ -1,6 +1,6 @@
-from typing import List, Optional, Any, Dict
-
 import logging
+from typing import Any, Dict, List, Optional
+
 from agents.specs import ChatCompletion
 from agents.tool_executor import ToolRegistry
 from langchain_core.tools import StructuredTool
@@ -20,13 +20,9 @@ class OpenAIChatCompletion:
         for tool in tools:
             self.tool_registry.register_tool(tool)
 
-    def chat_completion(
-        self, messages: List[ChatCompletionRequestMessage], **kwargs
-    ) -> ChatCompletion:
+    def chat_completion(self, messages: List[ChatCompletionRequestMessage], **kwargs) -> ChatCompletion:
         tools = self.tool_registry.openai_tools
-        output = self.client.chat.completions.create(
-            model=self.model, messages=messages, tools=tools
-        )
+        output = self.client.chat.completions.create(model=self.model, messages=messages, tools=tools)
         logger.debug(output)
         return output
 
