@@ -1,13 +1,4 @@
-# AI Doot 🤖 - Your Agentic Workflow Wizard 🧙‍♂️
-
-
-<div align="center">
-  [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/aniketmaurya/python-project-template?template=false)
-  &nbsp;&nbsp;&nbsp;
-  <a target="_blank" href="https://lightning.ai/lightning-ai/studios/introduction-to-ai-agents">
-    <img src="https://pl-bolts-doc-images.s3.us-east-2.amazonaws.com/app-2/studio-badge.svg" alt="Open In Studio"/>
-  </a>
-</div>
+# AI Doot 🤖 - Agentic Workflow Wizard 🧙‍♂️
 
 ---
 
