@@ -1,4 +1,4 @@
-# AI Doot 🤖 - Agentic Workflow Wizard 🧙‍♂️
+# Agentforce 🤖 - Agentic Workflow Wizard 🧙‍♂️
 
 ---
 
@@ -8,15 +8,15 @@
 Install like a pro with the latest version:
 
 ```bash
-pip install git+https://github.com/aniketmaurya/aidoot.git@main
+pip install git+https://github.com/aniketmaurya/agentforce.git@main
 ```
 
 **Editable Installation:**  
 For the mad scientists who like to tweak:
 
 ```bash
-git clone https://github.com/aniketmaurya/aidoot.git
-cd aidoot
+git clone https://github.com/aniketmaurya/agentforce.git
+cd agentforce
 pip install -e .
 ```
 
@@ -37,9 +37,9 @@ pip install -e .
 Here’s a quick showstopper using an LLM with weather data:
 
 ```python
-from aidoot.llms import LlamaCppChatCompletion
-from aidoot.tools import get_current_weather, wikipedia_search
-from aidoot.tool_executor import need_tool_use
+from agentforce.llms import LlamaCppChatCompletion
+from agentforce.tools import get_current_weather, wikipedia_search
+from agentforce.tool_executor import need_tool_use
 
 llm = LlamaCppChatCompletion.from_default_llm(n_ctx=0)
 llm.bind_tools([get_current_weather, wikipedia_search])  # Add tools from LangChain
@@ -94,8 +94,8 @@ So yeah, it's a fantastic day to be out and about in London. 🌍
 What if your AI could *see*? It can! Let’s combine text and image processing for a truly next-level experience.
 
 ```python
-from agents.llms import LlamaCppChatCompletion
-from agents.tools import wikipedia_search, google_search, image_inspector
+from agentforce.llms import LlamaCppChatCompletion
+from agentforce.tools import wikipedia_search, google_search, image_inspector
 
 llm = LlamaCppChatCompletion.from_default_llm(n_ctx=0)
 llm.bind_tools([google_search, wikipedia_search, image_inspector])
