@@ -1,162 +1,132 @@
 <p align="center">
   <img width="250" alt="logo" src="https://ik.imagekit.io/gradsflow/logo/v2/gf-logo-gradsflow-orange_bv-f7gJu-up.svg"/>
   <br>
-  <strong>An open-source application focused Agent framework.</strong>
-</p>
-<p align="center">
-  <a href="https://agents.gradsflow.com">Docs</a> |
-  <a href="https://github.com/gradsflow/agentforce/tree/main/examples">Examples</a>
+  <strong>AgentForce: A Production-Ready Framework for Building AI Agents</strong>
 </p>
 
----  
+<p align="center">
+  <a href="https://agents.gradsflow.com">Documentation</a> |
+  <a href="https://github.com/gradsflow/agentforce/tree/main/examples">Examples</a> |
+  <a href="#-quick-start">Quick Start</a>
+</p>
 
 ---
 
-## 🛠️ Installation
+AgentForce is a powerful, open-source framework designed for building production-ready AI agents. It simplifies the integration of various LLMs and tools, enabling you to create sophisticated AI applications with minimal setup.
 
-**Latest Version:**  
-Install the latest version:
+## ✨ Key Features
+
+- 🤖 **Multiple LLM Support**: OpenAI, Cohere Command (R/R+), and LlamaCPP integration
+- 🛠️ **Tool Integration**: Seamlessly add capabilities like web search, weather data, and image analysis
+- 👁️ **Multi-modal Support**: Process both text and images in your AI workflows
+- 🚀 **Production Ready**: Built with scalability and reliability in mind
+- 📦 **Easy to Extend**: Simple API for adding custom tools and LLM providers
+
+## 🚀 Quick Start
+
+### Installation
 
 ```bash
+# Install from PyPI (recommended)
+pip install agentforce
+
+# Install latest from GitHub
 pip install git+https://github.com/gradsflow/agentforce.git@main
-```
 
-**Editable Installation:**  
-If you like to live on the edge:
-
-```bash
+# Development installation
 git clone https://github.com/gradsflow/agentforce.git
 cd agentforce
 pip install -e .
 ```
 
----
+### Basic Usage
 
-## 💡 Supported LLMs
-
-- ✅ **OpenAI**
-- ✅ **Cohere Command R and Command R+**
-- ✅ **LlamaCPP**
-
----
-
-## 🚀 Usage / Examples
-
-### 🧰 Tooling Up with Local or Cloud LLMs
-
-Here’s a quick showstopper using an LLM with weather data:
+Here's a simple example using AgentForce with weather data:
 
 ```python
 from agentforce.llms import LlamaCppChatCompletion
-from agentforce.tools import get_current_weather, wikipedia_search
+from agentforce.tools import get_current_weather
 from agentforce.tool_executor import need_tool_use
 
+# Initialize LLM with weather tool
 llm = LlamaCppChatCompletion.from_default_llm(n_ctx=0)
-llm.bind_tools([get_current_weather, wikipedia_search])  # Add tools from LangChain
+llm.bind_tools([get_current_weather])
 
+# Create a simple query
 messages = [
-    {"role": "user", "content": "how is the weather in London today?"}
+    {"role": "user", "content": "How is the weather in London today?"}
 ]
 
+# Get response and handle tool usage
 output = llm.chat_completion(messages)
 
 if need_tool_use(output):
-    print("Using weather tool... it's about to get real")
     tool_results = llm.run_tools(output)
-    tool_results[0]["role"] = "assistant"
-
     updated_messages = messages + tool_results
     updated_messages.append({
         "role": "user",
-        "content": "Think step by step and answer my question based on the above context."
+        "content": "Summarize the weather information."
     })
     output = llm.chat_completion(updated_messages)
 
 print(output.choices[0].message.content)
 ```
 
-<details>
-  <summary>Expand output... (Go ahead, don't be shy)</summary>
+## 🎯 Advanced Features
 
-```text
-Alright, let's break this down for you like a pro:
+### Multi-modal Agent Example
 
-1. **Temperature**: 23°C (73°F) — Gorgeous! 👌
-2. **Cloud Cover**: Zero clouds. The sun is out. 🌞
-3. **Humidity**: 38%. Not too sticky.
-4. **Precipitation**: Nada. Dry as a desert. 🌵
-5. **Pressure**: 1023 hPa. Weather’s stable, people. 📏
-6. **Visibility**: 10 km. No fog, no drama. 👀
-7. **Weather Condition**: It’s sunny, it’s lovely, it’s perfect. 🌅
-8. **Wind**: A breezy 9 km/h. Just enough to mess up your hair. 💨
-
-So yeah, it's a fantastic day to be out and about in London. 🌍
-```
-
-</details>
-
-> **Tip:** `AgentForce` also supports the Cohere API for tool use and function calling. Check out the reproducible notebook [here](https://github.com/aniketmaurya/agents/blob/main/examples/cohere.ipynb).
-
----
-
-### ✨ Multi-modal Agent - See the World Through AI Eyes 👁🤖️
-
-What if your AI could *see*? It can! Let’s combine text and image processing for a truly next-level experience.
+Create agents that can understand and process both text and images:
 
 ```python
 from agentforce.llms import LlamaCppChatCompletion
 from agentforce.tools import wikipedia_search, google_search, image_inspector
 
+# Initialize LLM with multiple tools
 llm = LlamaCppChatCompletion.from_default_llm(n_ctx=0)
 llm.bind_tools([google_search, wikipedia_search, image_inspector])
 
-image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg"
+# Process image and generate response
+image_url = "https://example.com/image.jpg"
 messages = [
-    {"role": "system", "content": "You're an ultra-intelligent assistant who knows all the things. Use your powers!"},
-    {"role": "user", "content": f"Check this image {image_url} and tell me where in London I can go that looks like this."}
+    {"role": "system", "content": "You are a helpful assistant that can analyze images."},
+    {"role": "user", "content": f"What can you tell me about this image? {image_url}"}
 ]
 
 output = llm.chat_completion(messages)
 tool_results = llm.run_tools(output)
-
-updated_messages = messages + tool_results
-messages = updated_messages + [{
-    "role": "user",
-    "content": "Answer based on the tool results. Go on, impress me."
-}]
-output = llm.chat_completion(messages)
-
-print(output.choices[0].message.content)
+final_output = llm.chat_completion(messages + tool_results)
 ```
 
-<details>
-  <summary>Expand output... (Let’s see what the AI has to say)</summary>
+## 📚 Documentation
 
-```text
-Okay, let's break this down! The image you uploaded shows a serene nature boardwalk, surrounded by lush greenery and a peaceful, cloudy sky. Perfect for a casual walk or zen moment. 🌿
+For detailed documentation and advanced usage examples, visit our [Documentation](https://agents.gradsflow.com).
 
-In London, here’s where you can find your zen:
+## 🤝 Contributing
 
-1. **Richmond Park**: The big daddy of London parks. Wide open spaces, lakes, and majestic vibes. 🌳
-2. **Hampstead Heath**: For the wanderers—with ponds, meadows, and wooded areas to explore. 🌲
-3. **Greenwich Park**: Stunning views and historic landmarks. You'll feel like royalty. 👑
-4. **Victoria Park**: A chill vibe with lakes and gardens. Perfect for a day out. 🌸
-5. **Hyde Park**: The classic central park with all the iconic attractions. 🏞️
+We welcome contributions of all kinds! Whether it's:
+- 📝 Improving documentation
+- 🐛 Bug fixes
+- ✨ New features
+- 🔧 Tool integrations
 
-These parks are totally on-brand with that image. Your perfect outdoor day awaits! 🌞
-```
+Check out our [Contributing Guidelines](https://github.com/gradsflow/agentforce/blob/master/CONTRIBUTING.md) to get started.
 
-</details>
+## 📜 Code of Conduct
 
----
+We are committed to fostering an open and welcoming environment. Please read our [Code of Conduct](https://github.com/gradsflow/agentforce/blob/master/CODE_OF_CONDUCT.md).
 
 ## 🙌 Acknowledgements
 
-Built with love, powered by **PyCharm** 🧡  
-*(Huge shoutout to JetBrains for the free credits — you're awesome!)*
+Built with ❤️ using **PyCharm**  
+*Special thanks to JetBrains for their support!*
 
 <div align="center">
   <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/PyCharm_icon.svg" alt="PyCharm logo" width="100"/>
   &nbsp;&nbsp;&nbsp;
   <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.svg" alt="JetBrains logo" width="100"/>
 </div>
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
