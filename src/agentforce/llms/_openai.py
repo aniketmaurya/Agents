@@ -1,11 +1,12 @@
 import logging
 from typing import Any, Dict, List, Optional
 
-from agents.specs import ChatCompletion
-from agents.tool_executor import ToolRegistry
 from langchain_core.tools import StructuredTool
 from llama_cpp import ChatCompletionRequestMessage
 from openai import OpenAI
+
+from agentforce.specs import ChatCompletion
+from agentforce.tool_executor import ToolRegistry
 
 logger = logging.getLogger(__name__)
 

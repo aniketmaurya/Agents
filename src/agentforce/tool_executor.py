@@ -33,10 +33,11 @@ Step 2 is auto checked with Pydantic
 import json
 from typing import Any, Dict, List, Union
 
-from agents.specs import ChatCompletion, ToolCall
 from langchain_community.tools import StructuredTool
 from langchain_core.utils.function_calling import convert_to_openai_function
 from loguru import logger
+
+from agentforce.specs import ChatCompletion, ToolCall
 
 
 class ToolRegistry:

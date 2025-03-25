@@ -1,11 +1,12 @@
 import json
 
 import requests
-from agents.llms.llm import create_image_inspector
-from agents.utils import llama_cpp_image_handler
 from langchain.tools import tool
 from langchain_community.utilities import WikipediaAPIWrapper
 from loguru import logger
+
+from agentforce.llms.llm import create_image_inspector
+from agentforce.utils import llama_cpp_image_handler
 
 wikipedia_api_wrapper = None
 _image_inspector = None

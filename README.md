@@ -1,36 +1,46 @@
-# Agentforce 🤖 - Agentic Workflow Wizard 🧙‍♂️
+<p align="center">
+  <img width="250" alt="logo" src="https://ik.imagekit.io/gradsflow/logo/v2/gf-logo-gradsflow-orange_bv-f7gJu-up.svg"/>
+  <br>
+  <strong>An open-source application focused Agent framework.</strong>
+</p>
+<p align="center">
+  <a href="https://agents.gradsflow.com">Docs</a> |
+  <a href="https://github.com/gradsflow/agentforce/tree/main/examples">Examples</a>
+</p>
+
+---  
 
 ---
 
-## 🛠️ Installation - Get in the Game
+## 🛠️ Installation
 
 **Latest Version:**  
-Install like a pro with the latest version:
+Install the latest version:
 
 ```bash
-pip install git+https://github.com/aniketmaurya/agentforce.git@main
+pip install git+https://github.com/gradsflow/agentforce.git@main
 ```
 
 **Editable Installation:**  
-For the mad scientists who like to tweak:
+If you like to live on the edge:
 
 ```bash
-git clone https://github.com/aniketmaurya/agentforce.git
+git clone https://github.com/gradsflow/agentforce.git
 cd agentforce
 pip install -e .
 ```
 
 ---
 
-## 💡 Supported LLMs - Your AI Friends
+## 💡 Supported LLMs
 
-- ✅ **OpenAI** *(Because, duh—it's OpenAI!)*
-- ✅ **Cohere Command R and Command R+** *(For that extra punch)*
-- ✅ **LlamaCPP** *(Open-source and proud)*
+- ✅ **OpenAI**
+- ✅ **Cohere Command R and Command R+**
+- ✅ **LlamaCPP**
 
 ---
 
-## 🚀 Usage / Examples - Put It to Work
+## 🚀 Usage / Examples
 
 ### 🧰 Tooling Up with Local or Cloud LLMs
 
@@ -85,7 +95,7 @@ So yeah, it's a fantastic day to be out and about in London. 🌍
 
 </details>
 
-> **Tip:** `AIDoot` also supports the Cohere API for tool use and function calling. Check out the reproducible notebook [here](https://github.com/aniketmaurya/agents/blob/main/examples/cohere.ipynb).
+> **Tip:** `AgentForce` also supports the Cohere API for tool use and function calling. Check out the reproducible notebook [here](https://github.com/aniketmaurya/agents/blob/main/examples/cohere.ipynb).
 
 ---
 

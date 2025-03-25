@@ -3,11 +3,12 @@ import time
 from typing import Any, Dict, List, Optional
 
 import cohere
-from agents.specs import ChatCompletion, Choice, Message, ToolCall, Usage
-from agents.tool_executor import ToolRegistry
 from langchain_core.messages import AIMessage
 from langchain_core.tools import StructuredTool
 from llama_cpp import ChatCompletionRequestMessage
+
+from agentforce.specs import ChatCompletion, Choice, Message, ToolCall, Usage
+from agentforce.tool_executor import ToolRegistry
 
 logger = logging.getLogger(__name__)
 

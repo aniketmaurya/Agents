@@ -1,6 +1,6 @@
 import json
 
-from agents.tools import get_current_weather
+from agentforce.tools import get_current_weather
 
 
 def test_get_current_weather():

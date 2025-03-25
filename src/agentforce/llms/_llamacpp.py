@@ -1,11 +1,12 @@
 from typing import Any, Dict, List, Optional
 
-from agents.specs import ChatCompletion
-from agents.tool_executor import ToolRegistry
 from langchain_core.tools import StructuredTool
 from llama_cpp import ChatCompletionRequestMessage, Llama
 from llama_cpp.llama_tokenizer import LlamaHFTokenizer
 from loguru import logger
+
+from agentforce.specs import ChatCompletion
+from agentforce.tool_executor import ToolRegistry
 
 
 def create_tool_use_llm(**kwargs):
